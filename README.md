@@ -76,7 +76,7 @@ The project structure of this repository is as follows:
 ![User Dashboard](https://drive.google.com/uc?id=1A3utPcXfhkbEtsOMDsvWvJBLXeo5nzWX)
 
 ### ChatBot UI
-![ChatBot UI](https://drive.google.com/uc?id=1oIOx2zdiKjI96n2FOLhTPr1tr-VJsF5m)
+![ChatBot UI](https://drive.google.com/uc?id=1DsodeANGxEhypAKgjkvxdAHRf_0CAFNv)
 
 ### Profile Information Update
 ![Profile Information Update](https://drive.google.com/uc?id=1mdnLWOlND6Gwb4AiWmGlHQ-T5bqT0c7I)
