@@ -1,5 +1,5 @@
 from sqlite3 import Error
-from app.db.sql import connect_db
+from app.db.sqlconn import connect_db
 
 
 def insert_question(user_id, question, answer, question_category, created_at):

@@ -1,18 +1,15 @@
 import io
-from fastapi import APIRouter, Request, Depends, status, UploadFile, File, HTTPException
-from fastapi.responses import HTMLResponse, RedirectResponse, StreamingResponse
-from fastapi.templating import Jinja2Templates
 from base64 import b64encode
 import imghdr
+from fastapi import (APIRouter, Request, Depends, status,
+                     UploadFile, File, HTTPException)
+from fastapi.responses import HTMLResponse, RedirectResponse, StreamingResponse
+from fastapi.templating import Jinja2Templates
 from app.dependencies import is_authorized, PWD_CONTEXT
-from app.db.sql import (get_user_by_id,
-                        update_user,
-                        get_user_address_by_id,
-                        update_user_address,
-                        count_user_address,
-                        update_photo,
-                        get_photo_by_user_id,
-                        update_password)
+from app.db.user import (get_user_by_id, update_user, update_photo,
+                         get_photo_by_user_id, update_password)
+from app.db.address import (count_user_address, get_user_address_by_id,
+                            update_user_address)
 
 
 router = APIRouter(prefix="/user")
@@ -45,7 +42,7 @@ async def profile(request: Request):
 
     return templates.TemplateResponse(
         "profile.html", {
-            "request": request, 
+            "request": request,
             "user": user,
             "success": success,
             "error": error

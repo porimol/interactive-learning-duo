@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, Depends, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from app.db.sql import create_user, get_user_by_email
+from app.db.user import create_user, get_user_by_email
 from app.config import AUTH_SESSION_NAME
 from app.dependencies import is_authorized, get_access_token, PWD_CONTEXT
 
