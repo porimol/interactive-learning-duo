@@ -1,0 +1,153 @@
+{% extends "shared/base.html" %}
+
+{% block title %}Profile Settings - Python and SQL: intro / SQL platforms{% endblock %}
+
+{% block content %}
+    <h3 class="text-dark mb-4">Profile Settings</h3>
+    {% if success %}
+    <div class="alert alert-success" role="alert">
+        {{ success }}
+    </div>
+    {% endif %}
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+    <div class="row mb-3">
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-body text-center shadow">
+                    <img class="rounded-circle mb-3 mt-4" src="/user/profile-photo" width="160" height="160" alt="Profile photo">
+                    <!-- <img class="rounded-circle mb-3 mt-4" src="data:image/jpeg;base64,{{user.profile_photo}}" width="160" height="160" alt="Profile photo"> -->
+                    <div class="mb-3">
+                        <form method="post" action="/user/photo-upload" enctype="multipart/form-data">
+                            <input type="file" name="file" accept=".png,.jpg,.jpeg" required>
+                            <button class="btn btn-primary btn-sm" type="submit">Change Photo</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row mb-3 d-none">
+                <div class="col">
+                    <div class="card text-white bg-primary shadow">
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p class="m-0">Peformance</p>
+                                    <p class="m-0"><strong>65.2%</strong></p>
+                                </div>
+                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
+                            </div>
+                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white bg-success shadow">
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p class="m-0">Peformance</p>
+                                    <p class="m-0"><strong>65.2%</strong></p>
+                                </div>
+                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
+                            </div>
+                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card shadow mb-3">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">User Settings</p>
+                        </div>
+                        <div class="card-body">
+                            <form class="user" method="post" action="/user/profile">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="first_name"><strong>First Name</strong></label>
+                                            <input class="form-control" type="text" id="first_name" placeholder="First name" value="{{user.first_name}}" name="first_name">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="last_name"><strong>Last Name</strong></label>
+                                            <input class="form-control" type="text" id="last_name" placeholder="Last name" value="{{user.last_name}}" name="last_name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="email"><strong>Email Address</strong></label>
+                                            <input class="form-control" type="email" id="email" placeholder="Email" value="{{user.email}}" name="email">
+                                        </div>
+                                    </div>
+                                    <div class="col"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <button class="btn btn-primary btn-sm" type="submit">Update Profile</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">Address Settings</p>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="/user/address-update">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="apartment"><strong>Apartment</strong></label>
+                                            <input class="form-control" type="text" id="apartment" placeholder="Apartment" value="{{user.address.get('apartment', '')}}" name="apartment">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="building"><strong>Building Number</strong></label>
+                                            <input class="form-control" type="text" id="building" placeholder="Building number" value="{{user.address.get('building', '')}}" name="building">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3"><label class="form-label" for="post_code"><strong>Post Code</strong></label>
+                                            <input class="form-control" type="text" id="post_code" placeholder="Post code" value="{{user.address.get('post_code', '')}}" name="post_code">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3"><label class="form-label" for="city"><strong>City</strong></label>
+                                            <input class="form-control" type="text" id="city" placeholder="City" value="{{user.address.get('city', '')}}" name="city">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="country"><strong>Country</strong></label>
+                                            <select class="form-select" name="country">
+                                                <option value="poland">Poland</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col"></div>
+                                </div>
+                                <div class="mb-3">
+                                    <button class="btn btn-primary btn-sm" type="submit">Update Address</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
