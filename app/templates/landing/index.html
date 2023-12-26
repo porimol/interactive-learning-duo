@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Home - Python and SQL: intro / SQL platforms</title>
+    <title>Python and SQL: intro / SQL platforms</title>
     <meta name="description" content="LLM based Python Q&amp;A Chatbot">
     <link href="{{ url_for('assets', path='landing/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -16,9 +16,11 @@
 <body>
     <nav class="navbar navbar-expand bg-light navigation-clean navbar-light">
         <div class="container">
-            <img class="img-profile" src="{{ url_for('assets', path='img/logo.ico') }}">
+            <a href="/"><img class="img-profile" src="{{ url_for('assets', path='img/logo.ico') }}"></a>
             <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"></button>
+            {% if not request.session["USER_ID"] %}
             <div class="collapse navbar-collapse" id="navcol-1"><a class="btn btn-primary ms-auto" role="button" href="/auth/login">Sign In</a></div>
+            {% endif %}
         </div>
     </nav>
     <header class="text-center text-white masthead" style="background:url('assets/img/bg-masthead.jpg')no-repeat center center;background-size:cover;">
@@ -89,7 +91,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-xl-9 mx-auto position-relative">
-                    <h2 class="mb-4">Ready to get started? <a href="/auth/register" style="color: rebeccapurple;">Sign up now!</a></h2>
+                    <h2 class="mb-4">Ready to get started?
+                        {% if not request.session["USER_ID"] %}
+                        <a href="/auth/register" style="color: rebeccapurple;">Sign up now!</a>
+                        {% endif %}
+                    </h2>
                 </div>
                 <div class="col-md-10 col-lg-8 col-xl-7 mx-auto position-relative">
                     <form>
