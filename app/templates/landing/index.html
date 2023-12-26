@@ -18,9 +18,13 @@
         <div class="container">
             <a href="/"><img class="img-profile" src="{{ url_for('assets', path='img/logo.ico') }}"></a>
             <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"></button>
-            {% if not request.session["USER_ID"] %}
-            <div class="collapse navbar-collapse" id="navcol-1"><a class="btn btn-primary ms-auto" role="button" href="/auth/login">Sign In</a></div>
-            {% endif %}
+            <div class="collapse navbar-collapse" id="navcol-1">
+                {% if request.session["USER_ID"] %}
+                <a class="btn btn-primary ms-auto" role="button" href="/dashboard/home">Dashboard</a>
+                {% else %}
+                    <a class="btn btn-primary ms-auto" role="button" href="/auth/login">Sign In</a>
+                {% endif %}
+            </div>
         </div>
     </nav>
     <header class="text-center text-white masthead" style="background:url('assets/img/bg-masthead.jpg')no-repeat center center;background-size:cover;">
