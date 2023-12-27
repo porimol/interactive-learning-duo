@@ -4,10 +4,12 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from app.dependencies import is_authorized
 from app.db.qa import insert_question, get_todays_qa_by_userid
+from llms.code_llama2 import CodeLlama2
 
 router = APIRouter(prefix="/chatbot")
 router.dependencies = [Depends(is_authorized)]
 templates = Jinja2Templates(directory="app/templates")
+llm = CodeLlama2()
 
 
 @router.get("/qa", response_class=HTMLResponse)
@@ -55,9 +57,10 @@ async def question_answer(request: Request):
         return RedirectResponse(f"/chatbot/qa?error={message}", status_code=status.HTTP_302_FOUND)
     
     user_id = request.session["USER_ID"]
+    question_category = form.get("question_category")
     question = form.get("question")
-    answer = ""
-    question_category = "python"
+    qa_response = llm.conversationa_chain_retrival(question)
+    answer = qa_response["answer"]
     today_date = datetime.now().strftime("%Y-%m-%d %I:%M")
     insert_rsp = insert_question(user_id, question, answer, question_category, today_date)
     if insert_rsp:

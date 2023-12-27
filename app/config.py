@@ -1,4 +1,9 @@
-SECRET_KEY = "1653c9f03fa69876ee669c2633987d3cd4c68766c9672eeb68a77ce971299732"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SECRET_KEY = os.environ.get("SECRET_KEY", "secret")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 AUTH_SESSION_NAME = "auth_token"
@@ -17,3 +22,11 @@ MONTH_NAMES = {
     "11": "Nov",
     "12": "Dec",
 }
+
+EMBEDDING_MODEL = os.environ.get(
+    "EMBEDDING_MODEL",
+    "sentence-transformers/paraphrase-xlm-r-multilingual-v1")   
+QDRANT_URL = os.environ.get("QDRANT_URL", "http://localhost:6333")
+QDRANT_TOKEN = os.environ.get("QDRANT_TOKEN", None)
+QDRANT_COLLECTION_NAME = os.environ.get("QDRANT_COLLECTION_NAME", "source_code")
+CODE_LLAMA2 = os.environ.get("CODE_LLAMA2", "microsoft/CodeGPT-small-py")
