@@ -152,6 +152,8 @@ async def logout(request: Request):
     Logs out the user and returns a message indicating successful logout.
     """
     request.session.pop(AUTH_SESSION_NAME, None)
+    request.session.pop("USER_ID", None)
+    request.session.pop("FULL_NAME", None)
 
     if request.session.get(AUTH_SESSION_NAME) is None:
         return RedirectResponse("/auth/login", status_code=status.HTTP_302_FOUND)
