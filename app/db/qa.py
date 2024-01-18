@@ -45,7 +45,7 @@ def get_todays_qa_by_userid(user_id, created_at):
     try:
         conn = connect_db()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM questions_answers WHERE user_id=? AND DATE(created_at)=? ORDER BY created_at DESC", (user_id, created_at,))
+        cursor.execute("SELECT * FROM questions_answers WHERE user_id=? AND DATE(created_at)=? ORDER BY id DESC", (user_id, created_at,))
         # columns = [description[0] for description in cursor.description]
         user = cursor.fetchall()
         conn.close()
