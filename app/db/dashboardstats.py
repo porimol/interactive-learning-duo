@@ -19,7 +19,10 @@ def get_question_stats(user_id):
         conn = connect_db()
         cursor = conn.cursor()
         # cursor.execute("SELECT strftime('%m', created_at) AS month_name, question_category, COUNT(*) AS question_count FROM questions_answers WHERE user_id = ? GROUP BY strftime('%Y-%m', created_at), question_category;", (user_id,))
-        cursor.execute("SELECT strftime('%m', created_at) AS month_name, question_category, COUNT(*) AS question_count FROM questions_answers WHERE user_id = ? GROUP BY strftime('%Y-%m', created_at);", (user_id,))
+        # cursor.execute("SELECT strftime('%m', created_at) AS month_name, question_category, COUNT(*) AS question_count FROM questions_answers WHERE user_id = ? GROUP BY strftime('%Y-%m', created_at);", (user_id,))
+        cursor.execute("""SELECT strftime('%m', qa.created_at) AS month_name, qc.category_name, COUNT(*) AS question_count 
+                FROM questions_answers qa INNER JOIN question_category qc on qa.question_category_id=qc.id 
+                WHERE qa.user_id = ? GROUP BY strftime('%Y-%m', qa.created_at);""", (user_id,))
         user = cursor.fetchall()
         conn.close()
         return user
@@ -44,7 +47,9 @@ def get_question_ratio(user_id):
     try:
         conn = connect_db()
         cursor = conn.cursor()
-        cursor.execute("SELECT question_category, COUNT(*) AS question_count FROM questions_answers WHERE user_id = ? GROUP BY question_category;", (user_id,))
+        cursor.execute("""SELECT qc.category_name, COUNT(*) AS question_count 
+                FROM questions_answers qa INNER JOIN question_category qc on qa.question_category_id=qc.id 
+                WHERE qa.user_id = ? GROUP BY qc.category_name;""", (user_id,))
         user = cursor.fetchall()
         conn.close()
         return user

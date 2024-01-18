@@ -1,0 +1,80 @@
+{% extends "shared/base.html" %}
+
+{% block title %}Q&A - Python and SQL: intro / SQL platforms{% endblock %}
+
+{% block content %}
+    <h3 class="text-dark mb-4">History</h3>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">Your Q&A History</p>
+            {% if success %}
+                <div class="alert alert-success" role="alert">{{ success }}</div>
+            {% endif %}
+
+            {% if error %}
+                <div class="alert alert-danger" role="alert">{{ error }}</div>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Question Category</th>
+                            <th>Question</th>
+                            <th>Answer</th>
+                            <th>Q&A Time</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for qa in qa_histories %}
+                        <tr>
+                            <td>
+                                <img class="rounded-circle me-2" width="30" height="30" src="/user/profile-photo">
+                                {{ qa[1] }} {{ qa[2] }}
+                            </td>
+                            <td>{{qa[5]}}</td>
+                            <td>{{qa[3]}}</td>
+                            <td width="500">
+                                <textarea rows="6" cols="50" readonly>{{qa[4]}}</textarea>
+                            </td>
+                            <td>{{qa[6]}}</td>
+                            <td>
+                                <form action="/chatbot/history/delete" method="POST">
+                                    <input type="hidden" name="qa_id" value="{{qa[0]}}">
+                                    <button class="btn btn-danger btn-sm rounded-0" type="submit" data-toggle="tooltip" data-placement="top" title="Delete">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                                <!-- <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete">
+                                    <i class="fa fa-trash"></i>
+                                </button> -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><strong>Full Name</strong></td>
+                            <td><strong>Question Category</strong></td>
+                            <td><strong>Question</strong></td>
+                            <td><strong>Answer</strong></td>
+                            <td><strong>Q&A Time</strong></td>
+                            <td><strong>Action</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% block script %}
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

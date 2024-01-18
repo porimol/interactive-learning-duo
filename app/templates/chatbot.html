@@ -24,8 +24,9 @@
                                 <div class="mb-3">
                                     <label class="form-label" for="question_category"><strong>Question Category</strong></label>
                                     <select class="form-select" name="question_category">
-                                        <option value="python" selected>Python</option>
-                                        <option value="sql">SQL</option>
+                                        {% for category in categories %}
+                                        <option value="{{ category[0] }}">{{ category[1] }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                                 <div class="mb-3">
