@@ -36,9 +36,13 @@ class RAG:
             "bslatkin/effectivepython",
             "kacos2000/Queries"
         ]
+        # Alarm: For Qdrant Cloud
+        # self.qdrant_client = QdrantClient(
+        #     url=QDRANT_URL,
+        #     api_key=QDRANT_TOKEN
+        # )
         self.qdrant_client = QdrantClient(
-            url=QDRANT_URL,
-            api_key=QDRANT_TOKEN
+            path="qdrant_db",
         )
 
     def __repo_clone(self):
@@ -136,13 +140,21 @@ class RAG:
         source_codes = sql_code + python_code + fastapi_code
 
         documents = self.__doc_splitter(source_codes)
+        # Alarm: For Qdrant Cloud
+        # qdrant_rsp = Qdrant.from_documents(
+        #     documents,
+        #     self.hf_embedding(),
+        #     url=QDRANT_URL,
+        #     api_key=QDRANT_TOKEN,
+        #     prefer_grpc=True,
+        #     collection_name=QDRANT_COLLECTION_NAME,
+        # )
         qdrant_rsp = Qdrant.from_documents(
             documents,
             self.hf_embedding(),
-            url=QDRANT_URL,
-            api_key=QDRANT_TOKEN,
+            path="qdrant_db",
             prefer_grpc=True,
-            collection_name=QDRANT_COLLECTION_NAME,
+            collection_name="source_code",
         )
 
         return qdrant_rsp
